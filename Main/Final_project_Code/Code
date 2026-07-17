@@ -1,1 +1,93 @@
+package com.mycompany.project;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+abstract class HospitalService {
+    abstract void showDetails();
+}
+class Person extends HospitalService {
+    protected String name;
+    protected int age;
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    void showDetails() {
+    }
+}
+class Patient extends Person {
+    String disease;
+    Patient(String name, int age, String disease) {
+        super(name, age);
+        this.disease = disease;
+    }
+    @Override
+    void showDetails() {
+        System.out.println(name);
+        System.out.println(age);
+        System.out.println(disease);
+    }
+}
+class Doctor extends Person {
+    String specialization;
+    Doctor(String name, int age, String specialization) {
+        super(name, age);
+        this.specialization = specialization;
+    }
+    @Override
+    void showDetails() {
+        System.out.println(name);
+        System.out.println(specialization);
+    }
+}
+class Appointment {
+    private String date;
+    private String time;
+    public void setDate(String date) {
+        this.date = date;
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setTime(String time) {
+        this.time = time;
+    }
+    public String getTime() {
+        return time;
+    }
+}
+class Bill {
+    double calculateBill() {
+        return 0;
+    }
+}
+class CabinBill extends Bill {
+    @Override
+    double calculateBill() {
+        return 4500;
+    }
+}
+class GeneralBill extends Bill {
+    @Override
+    double calculateBill() {
+        return 1200;
+    }
+}
 
+public class Project {
+
+    public static void main(String[] args) {
+        
+        JFrame frame = new JFrame("Hospital Management System");
+        frame.setSize(500, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout(10, 10));
+
+   
+        JLabel titleLabel = new JLabel("Hospital Service Dashboard", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        frame.add(titleLabel, BorderLayout.NORTH); 
+        frame.setVisible(true);
+    }
+}
