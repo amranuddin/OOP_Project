@@ -1,0 +1,57 @@
+class CabinBed extends Patient {
+    private String cabinNo;
+    private String bedNo;
+    private String status;
+
+    public CabinBed(String name, int age, String disease,
+                    String cabinNo, String bedNo, String status) {
+
+        super(name, age, disease);
+
+        this.cabinNo = cabinNo;
+        this.bedNo = bedNo;
+        this.status = status;
+    }
+    public String assignBed() {
+
+        if(status.equals("Available")) {
+
+            return name + " assigned to "
+                    + cabinNo + " (" + bedNo + ")";
+
+        }
+
+        return "Cabin is occupied.";
+    }
+
+    @Override
+    void showDetails() {
+
+        super.showDetails();
+
+        System.out.println("Cabin : " + cabinNo);
+        System.out.println("Bed : " + bedNo);
+        System.out.println("Status : " + status);
+    }
+}
+ class Billing extends Bill {
+
+    private double doctorFee;
+    private double medicineFee;
+    private double cabinCharge;
+    private double labTest;
+
+    public Billing(double doctorFee, double medicineFee,
+                   double cabinCharge, double labTest) {
+
+        this.doctorFee = doctorFee;
+        this.medicineFee = medicineFee;
+        this.cabinCharge = cabinCharge;
+        this.labTest = labTest;
+    }
+
+    @Override
+    double calculateBill() {
+        return doctorFee + medicineFee + cabinCharge + labTest;
+    }
+}
