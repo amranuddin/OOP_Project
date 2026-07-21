@@ -7,7 +7,7 @@
 An interactive, web-hosted **Hospital Management Mini System** designed to streamline core healthcare administrative workflows. Developed as an academic project, this system implements **Object-Oriented Programming (OOP)** principles and follows the industry-standard **Model-View-Controller (MVC)** architectural design pattern.
 
 ---
-
+  
 ## <span style="color:#ff5722;">🛠️ OOP Implementation in This Project</span>
 
 This project serves as a practical demonstration of the four core pillars of Object-Oriented Programming:
