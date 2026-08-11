@@ -219,10 +219,10 @@ public class Swing extends JFrame {
         JPanel centerGrid = new JPanel(new GridLayout(1, 2, 12, 12));
         centerGrid.setOpaque(false);
 
-        // --- GRAPH/CHART IS REPLACED WITH A BIGGER NOTICE BOARD ---
+        // --- NOTICE BOARD CARD ---
         JPanel noticeBoardCard = new JPanel(new BorderLayout(10, 10));
         noticeBoardCard.setBackground(COLOR_CARD_OVERVIEW);
-        noticeBoardCard.setBorder(createCustomTitledBorder("📢 Hospital Notice Board & Broadcast", COLOR_ORANGE));
+        noticeBoardCard.setBorder(createCustomTitledBorder("Hospital Notice Board & Broadcast", COLOR_ORANGE));
 
         noticeDisplayArea = new JTextArea();
         noticeDisplayArea.setEditable(false);
@@ -231,7 +231,7 @@ public class Swing extends JFrame {
         noticeDisplayArea.setFont(new Font("Segoe UI", Font.BOLD, 13));
         noticeDisplayArea.setForeground(new Color(180, 83, 9)); 
         noticeDisplayArea.setBackground(new Color(254, 243, 199)); 
-        noticeDisplayArea.setText("📌 [NOTICE] All doctors are requested to attend the clinical review meeting today at 4:00 PM.\n\n📌 [GENERAL] Visitors are strictly advised to follow visiting hours from 04:00 PM to 07:00 PM.\n\n📌 [EMERGENCY] Code Blue response protocol updated. Please check staff manual.");
+        noticeDisplayArea.setText("[NOTICE] All doctors are requested to attend the clinical review meeting today at 4:00 PM.\n\n[GENERAL] Visitors are strictly advised to follow visiting hours from 04:00 PM to 07:00 PM.\n\n[EMERGENCY] Code Blue response protocol updated. Please check staff manual.");
         noticeDisplayArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane noticeScroll = new JScrollPane(noticeDisplayArea);
@@ -251,22 +251,33 @@ public class Swing extends JFrame {
         JPanel rightColumn = new JPanel(new BorderLayout(10, 10));
         rightColumn.setOpaque(false);
 
+        // --- LOGO CONTAINER (Quick Actions এর উপরে লোগো) ---
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/images/hospitalpng.png"));
+        Image logoImage = logoIcon.getImage().getScaledInstance(140, 70, Image.SCALE_SMOOTH);
+        JLabel overviewLogoLabel = new JLabel(new ImageIcon(logoImage));
+        overviewLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        overviewLogoLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
         JPanel quickActionCard = new JPanel(new BorderLayout(8, 8));
         quickActionCard.setBackground(COLOR_CARD_OVERVIEW);
         quickActionCard.setBorder(createCustomTitledBorder("Quick Actions", COLOR_CYAN));
+
+        // লোগো যোগ করা হলো Quick Action এর North অংশে
+        quickActionCard.add(overviewLogoLabel, BorderLayout.NORTH);
 
         JPanel quickBtnGrid = new JPanel(new GridLayout(4, 2, 10, 10));
         quickBtnGrid.setOpaque(false);
         quickBtnGrid.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JButton quickEmergencyBtn = createStyledButton("🚨 Code Blue Alert", COLOR_RED, Color.WHITE);
-        JButton quickBloodBtn     = createStyledButton("🩸 Blood Search", new Color(180, 40, 40), Color.WHITE);
-        JButton quickRegBtn       = createStyledButton("➕ Register Patient", COLOR_CYAN, Color.WHITE);
-        JButton quickAppBtn       = createStyledButton("📅 Book Appointment", COLOR_VIOLET, Color.WHITE);
-        JButton quickBillBtn      = createStyledButton("💳 Quick Billing", COLOR_PRIMARY_BLUE, Color.WHITE);
-        JButton quickPaymentBtn   = createStyledButton("💵 Collect Payment", COLOR_GREEN, Color.WHITE);
-        JButton quickBedBtn       = createStyledButton("🛏️ Allocate Bed", COLOR_SLATE, Color.WHITE);
-        JButton quickReportBtn    = createStyledButton("📊 Daily Report", COLOR_ORANGE, Color.WHITE);
+        // প্রতিটা বাটনের নাম থেকে শেপ/ইমোজি মুছে দেয়া হয়েছে
+        JButton quickEmergencyBtn = createStyledButton("Code Blue Alert", COLOR_RED, Color.WHITE);
+        JButton quickBloodBtn     = createStyledButton("Blood Search", new Color(180, 40, 40), Color.WHITE);
+        JButton quickRegBtn       = createStyledButton("Register Patient", COLOR_CYAN, Color.WHITE);
+        JButton quickAppBtn       = createStyledButton("Book Appointment", COLOR_VIOLET, Color.WHITE);
+        JButton quickBillBtn      = createStyledButton("Quick Billing", COLOR_PRIMARY_BLUE, Color.WHITE);
+        JButton quickPaymentBtn   = createStyledButton("Collect Payment", COLOR_GREEN, Color.WHITE);
+        JButton quickBedBtn       = createStyledButton("Allocate Bed", COLOR_SLATE, Color.WHITE);
+        JButton quickReportBtn    = createStyledButton("Daily Report", COLOR_ORANGE, Color.WHITE);
 
         quickBtnGrid.add(quickEmergencyBtn);
         quickBtnGrid.add(quickBloodBtn);
@@ -281,7 +292,7 @@ public class Swing extends JFrame {
 
         JPanel emergencyCard = new JPanel(new BorderLayout(6, 6));
         emergencyCard.setBackground(COLOR_CARD_OVERVIEW);
-        emergencyCard.setBorder(createCustomTitledBorder("🚨 Emergency Bed Requests & Priority Queue", COLOR_RED));
+        emergencyCard.setBorder(createCustomTitledBorder("Emergency Bed Requests & Priority Queue", COLOR_RED));
 
         String[] emCols = {"Patient Name", "Required Type", "Priority Level", "Status"};
         emergencyTableModel = new DefaultTableModel(emCols, 0) {
@@ -331,8 +342,8 @@ public class Swing extends JFrame {
         JPanel emControlBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 2));
         emControlBar.setOpaque(false);
 
-        JButton addEmRequestBtn = createStyledButton("➕ Add Request", COLOR_RED, Color.WHITE);
-        JButton resolveEmBtn = createStyledButton("✓ Allocate & Clear", COLOR_GREEN, Color.WHITE);
+        JButton addEmRequestBtn = createStyledButton("Add Request", COLOR_RED, Color.WHITE);
+        JButton resolveEmBtn = createStyledButton("Allocate & Clear", COLOR_GREEN, Color.WHITE);
 
         emControlBar.add(addEmRequestBtn);
         emControlBar.add(resolveEmBtn);
@@ -380,7 +391,7 @@ public class Swing extends JFrame {
             String newNotice = noticeInputField.getText().trim();
             if (!newNotice.isEmpty() && !newNotice.equals("Type new official notice...")) {
                 String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                noticeDisplayArea.setText("📌 [" + timeStamp + "] " + newNotice + "\n\n" + noticeDisplayArea.getText());
+                noticeDisplayArea.setText("[" + timeStamp + "] " + newNotice + "\n\n" + noticeDisplayArea.getText());
                 JOptionPane.showMessageDialog(this, "Notice Posted Successfully!");
                 noticeInputField.setText("");
             } else {
@@ -443,7 +454,7 @@ public class Swing extends JFrame {
         JTextField pName = createStyledTextField("", COLOR_CYAN);
         JTextField pAge = createStyledTextField("", COLOR_CYAN);
         JTextField pDisease = createStyledTextField("", COLOR_CYAN);
-        JButton pBtn = createStyledButton("➕ Add Patient", COLOR_CYAN, Color.WHITE);
+        JButton pBtn = createStyledButton("Add Patient", COLOR_CYAN, Color.WHITE);
 
         gbc.gridx = 0; gbc.gridy = 0; regFormCard.add(createStyledLabel("Patient Name:"), gbc);
         gbc.gridx = 0; gbc.gridy = 1; regFormCard.add(pName, gbc);
@@ -466,7 +477,7 @@ public class Swing extends JFrame {
 
         JTextField searchField = createStyledTextField("", COLOR_CYAN);
         searchField.setPreferredSize(new Dimension(250, 32));
-        JLabel searchLabel = createStyledLabel("🔍 Search Patient:");
+        JLabel searchLabel = createStyledLabel("Search Patient:");
 
         searchPanel.add(searchLabel);
         searchPanel.add(searchField);
@@ -566,7 +577,7 @@ public class Swing extends JFrame {
         JTextField dName = createStyledTextField("", COLOR_VIOLET);
         JTextField dSpec = createStyledTextField("", COLOR_VIOLET);
         JTextField dTime = createStyledTextField("10:00 AM - 04:00 PM", COLOR_VIOLET);
-        JButton dBtn = createStyledButton("➕ Add Doctor", COLOR_VIOLET, Color.WHITE);
+        JButton dBtn = createStyledButton("Add Doctor", COLOR_VIOLET, Color.WHITE);
 
         gbc.gridx = 0; gbc.gridy = 0; formCard.add(createStyledLabel("Doctor Name:"), gbc);
         gbc.gridx = 0; gbc.gridy = 1; formCard.add(dName, gbc);
@@ -865,7 +876,7 @@ public class Swing extends JFrame {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 l.setOpaque(true);
-                l.setHorizontalAlignment(SwingConstants.CENTER); // Center align text
+                l.setHorizontalAlignment(SwingConstants.CENTER); 
                 l.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 8));
                 
                 if (isSelected) {
@@ -1059,7 +1070,7 @@ public class Swing extends JFrame {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(
                     table, value, isSelected, hasFocus, row, column);
 
-                label.setHorizontalAlignment(SwingConstants.CENTER); // Center align text
+                label.setHorizontalAlignment(SwingConstants.CENTER); 
                 label.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 8));
 
                 if (isSelected) {
@@ -1094,7 +1105,7 @@ public class Swing extends JFrame {
 
         JButton admitBtn = createStyledButton("Admit / Assign Patient", COLOR_VIOLET, Color.WHITE);
         JButton releaseBtn = createStyledButton("Discharge Patient", COLOR_RED, Color.WHITE);
-        JButton addNewBedBtn = createStyledButton("➕ Add New Room/Bed", COLOR_PRIMARY_BLUE, Color.WHITE);
+        JButton addNewBedBtn = createStyledButton("Add New Room/Bed", COLOR_PRIMARY_BLUE, Color.WHITE);
 
         actionPanel.add(admitBtn);
         actionPanel.add(releaseBtn);
